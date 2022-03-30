@@ -2,13 +2,15 @@ import random
 from itertools import permutations
 #Based on Darwin's Survival of The Fittest 
 #Here Fitness is taken as the Pair of Non Attacking Queens arrangement
-def random_space(num_queen): 
-    return [ random.randint(1, num_queen) for _ in range(num_queen) ]
+def random_space(num_queen):
+    new_list = []
+    for _ in range(num_queen):
+        new_list.append(random.randint(1, num_queen))
+    return new_list
 
 def pairOfNonAttackingQueens(arrangement): #Find the fittest arrangement
-    horizontal_collisions = sum([arrangement.count(queen)-1 for queen in arrangement])/2
-    diagonal_collisions = 0
-
+    row_attacks = sum([arrangement.count(queen)-1 for queen in arrangement])/2
+    
     n = len(arrangement)
     left_diagonal = [0] * 2*n
     right_diagonal = [0] * 2*n
@@ -18,7 +20,7 @@ def pairOfNonAttackingQueens(arrangement): #Find the fittest arrangement
         right_diagonal[len(arrangement) - i + arrangement[i] - 2] += 1
         i=i+1
 
-    diagonal_collisions = 0
+    diagonal_attacks = 0
     i=0
     while i<=((2*n-1) -1):
         counter = 0
@@ -26,13 +28,13 @@ def pairOfNonAttackingQueens(arrangement): #Find the fittest arrangement
             counter += left_diagonal[i]-1
         if right_diagonal[i] > 1:
             counter += right_diagonal[i]-1
-        diagonal_collisions += counter / (n-abs(i-n+1))
+        diagonal_attacks += counter / (n-abs(i-n+1))
         i=i+1
     
-    return int(maxPairOfNonAttackingQueens - (horizontal_collisions + diagonal_collisions)) #28-(2+3)=23
+    nonAttackingPositions = int(maxPairOfNonAttackingQueens - (row_attacks + diagonal_attacks))
+    return  nonAttackingPositions
 
-def probability(arrangement, pairOfNonAttackingQueens):
-    return pairOfNonAttackingQueens(arrangement) / maxPairOfNonAttackingQueens
+
 
 def random_pick(setOfAllSolutions, probabilities):
     populationWithProbabilty = zip(setOfAllSolutions, probabilities)
@@ -60,7 +62,10 @@ def alter(x):
 def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens): #Populate or generate the list of solutions
     alter_probability= 0.03
     new_SetOfSolutions = []
-    probabilities = [probability(n, pairOfNonAttackingQueens) for n in setOfAllSolutions]
+    probabilities = []
+    for n in setOfAllSolutions:
+        probabilities.append(pairOfNonAttackingQueens(n) / maxPairOfNonAttackingQueens)
+    
     i=0
     while i<=len(setOfAllSolutions) - 1:
         x = random_pick(setOfAllSolutions, probabilities) 
@@ -75,7 +80,7 @@ def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens): #Populate
     return new_SetOfSolutions
 
 def print_arrangement(pos): #For every position in each fitness (Pair of non-attacking queens), show
-    print("Position = {},  Fitness = {}"
+    print("Position = {},  Fitness Score = {}"
         .format(str(pos), pairOfNonAttackingQueens(pos)))
     matrix = [] 
     for i in range(len(pos)):          # A for loop for row entries 
@@ -94,19 +99,17 @@ def print_arrangement(pos): #For every position in each fitness (Pair of non-att
     #print_board(matrix)
 
 if __name__ == "__main__":
-    num_queen = int(input("Enter Number of Queens: ")) #say N = 8
-    maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2  # 8*7/2 = 28
-    setOfAllSolutions = [random_space(num_queen) for _ in range(100)]
-    
-    generation = 1
-
-    #while not maxPairOfNonAttackingQueens in [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions]:
+    num_queen = int(input("Enter the Number of Queens to be placed on the board: ")) 
+    maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2  
+    setOfAllSolutions = []
+    for _ in range(100):
+        setOfAllSolutions.append(random_space(num_queen))
+         
     while [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
-
         setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens)
+        
 
-        generation += 1
-    position_ = []
+    final_position = []
 
     for pos in setOfAllSolutions:
         if pairOfNonAttackingQueens(pos) == maxPairOfNonAttackingQueens:
@@ -114,8 +117,8 @@ if __name__ == "__main__":
             new_list =[list(p) for p in permutations(pos)]
             for item in new_list:
                 if pairOfNonAttackingQueens(item) == maxPairOfNonAttackingQueens:
-                    print("One of the solutions: ")
-                    position_ = item
+                    print("One solution is: ")
+                    final_position = item
                     print_arrangement(item)
             
     board = []
@@ -124,7 +127,7 @@ if __name__ == "__main__":
         board.append(["0"] * num_queen)
         
     for i in range(num_queen):
-        board[num_queen-position_[i]][i]="1"
+        board[num_queen-final_position[i]][i]="1"
             
 
     def print_board(board): #Show the board
@@ -132,6 +135,5 @@ if __name__ == "__main__":
         for row in board:
             print (" ".join(row))
             
-    print()
     print_board(board)
             
