@@ -63,5 +63,9 @@ if __name__ == '__main__':
 
     # `N × N` chessboard
     num_queens = int(input('Enter number of queens, N \n'))
-    board = create_board(num_queens)
-    n_queen(board, 0)
+
+    if num_queens <= 3:
+        print("Solution does not exist")
+    else:
+        board = create_board(num_queens)
+        n_queen(board, 0)
