@@ -1,7 +1,8 @@
 import random
+from itertools import permutations
 #Based on Darwin's Survival of The Fittest 
 #Here Fitness is taken as the Pair of Non Attacking Queens arrangement
-def random_space(size): 
+def random_space(num_queen): 
     return [ random.randint(1, num_queen) for _ in range(num_queen) ]
 
 def pairOfNonAttackingQueens(arrangement): #Find the fittest arrangement
@@ -99,7 +100,8 @@ if __name__ == "__main__":
     
     generation = 1
 
-    while not maxPairOfNonAttackingQueens in [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions]:
+    #while not maxPairOfNonAttackingQueens in [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions]:
+    while [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
 
         setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens)
 
@@ -108,10 +110,13 @@ if __name__ == "__main__":
 
     for pos in setOfAllSolutions:
         if pairOfNonAttackingQueens(pos) == maxPairOfNonAttackingQueens:
-            print("");
-            print("One of the solutions: ")
-            position_ = pos
-            print_arrangement(pos)
+            print("")
+            new_list =[list(p) for p in permutations(pos)]
+            for item in new_list:
+                if pairOfNonAttackingQueens(item) == maxPairOfNonAttackingQueens:
+                    print("One of the solutions: ")
+                    position_ = item
+                    print_arrangement(item)
             
     board = []
     
