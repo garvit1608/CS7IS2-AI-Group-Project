@@ -21,9 +21,7 @@ cd CS7IS2-AI-Group-Project
 Solving the N-Queen problems
 
 ## Algorithms
-Backtracking algorithm
-Hill climbing algorithm
-Genetic algorithm
+1. Backtracking algorithm 2. Hill climbing algorithm 3. Genetic algorithm
 
 ## Running code
 
