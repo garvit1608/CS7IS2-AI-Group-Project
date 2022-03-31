@@ -111,8 +111,7 @@ class HillClimbing:
         return next_board
 
 
-if __name__ == '__main__':
-
+def main():
     n = int(input("Enter number of queens\t"))
 
     if n > 3:
@@ -129,3 +128,5 @@ if __name__ == '__main__':
     else:
         print("Solution does not exist")
 
+if __name__ == '__main__':
+    main()

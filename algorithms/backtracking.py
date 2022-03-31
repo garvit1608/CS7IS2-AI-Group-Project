@@ -60,9 +60,7 @@ def n_queen(board, row):
             # reset the current square
             board[row][col] = '_'
 
-
-if __name__ == '__main__':
-
+def main():
     number_of_queens = int(input('Enter number of queens, N \n'))
 
     if number_of_queens <= 3:
@@ -70,3 +68,6 @@ if __name__ == '__main__':
     else:
         board = create_board(number_of_queens)
         n_queen(board, 0)
+
+if __name__ == '__main__':
+    main()
