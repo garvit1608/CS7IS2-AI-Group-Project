@@ -1,4 +1,4 @@
-from  algorithms import backtracking, hillclimbing
+from  algorithms import backtracking, hillclimbing, genetic_algorithm
 
 if __name__ == '__main__':
     print(
@@ -14,6 +14,8 @@ if __name__ == '__main__':
         backtracking.main()
     elif choice == 2:
         hillclimbing.main()
+    elif choice == 3:
+        genetic_algorithm.main()
     else:
         print("Wrong input")
 

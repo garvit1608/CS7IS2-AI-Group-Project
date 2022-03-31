@@ -19,7 +19,7 @@ def random_solution(setOfAllSolutions, probabilities):
             return solution
         end += probability
 
-def pairOfNonAttackingQueens(arrangement): #Find the fittest arrangement
+def pairOfNonAttackingQueens(arrangement,maxPairOfNonAttackingQueens): #Find the fittest arrangement
     row_attacks = 0
     for position in arrangement:
         row_attacks += arrangement.count(position)-1
@@ -59,11 +59,11 @@ def crossover(x, y): #Re-arrange the position in the matrix
     return x[0:slice_index] + y[slice_index:len(x)]
 
 
-def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,alter_probability= 0.03): #Populate or generate the list of solutions
+def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens,alter_probability= 0.03): #Populate or generate the list of solutions
     new_SetOfSolutions = []
     probability_vals = []
     for solution in setOfAllSolutions:
-        probability_vals.append(pairOfNonAttackingQueens(solution) / maxPairOfNonAttackingQueens)
+        probability_vals.append(pairOfNonAttackingQueens(solution,maxPairOfNonAttackingQueens) / maxPairOfNonAttackingQueens)
     
     i=0
     while i<=len(setOfAllSolutions) - 1:
@@ -72,16 +72,16 @@ def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,alter_proba
         child = crossover(parent_1, parent_2) 
         if alter_probability >= random.random() :
             child = alter(child)
-        print_arrangement(child)
+        print_arrangement(child,maxPairOfNonAttackingQueens)
         new_SetOfSolutions.append(child)
-        if pairOfNonAttackingQueens(child) == maxPairOfNonAttackingQueens:
+        if pairOfNonAttackingQueens(child,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
             break
         i=i+1
     return new_SetOfSolutions
 
-def print_arrangement(pos): #For every position in each fitness (Pair of non-attacking queens), show
+def print_arrangement(pos,maxPairOfNonAttackingQueens): #For every position in each fitness (Pair of non-attacking queens), show
     print("Position = {},  Fitness Score = {}"
-        .format(str(pos), pairOfNonAttackingQueens(pos)))
+        .format(str(pos), pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens)))
     matrix = [] 
     for i in range(len(pos)):          # A for loop for row entries 
         a =[] 
@@ -99,28 +99,31 @@ def print_arrangement(pos): #For every position in each fitness (Pair of non-att
         print(''.join(str(element)))
     
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
+def main():
     num_queen = int(input("Enter the Number of Queens to be placed on the board: ")) 
     setOfAllSolutions = []
     for i in range(100):
         setOfAllSolutions.append(random_space(num_queen))
 
     maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2     
-    while [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
-        setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens)
+    while [pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
+        setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
         
 
     final_position = []
 
     for pos in setOfAllSolutions:
-        if pairOfNonAttackingQueens(pos) == maxPairOfNonAttackingQueens:
+        if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
             print("")
             new_list =[list(p) for p in permutations(pos)]
             i=1
             for item in new_list:
-                if pairOfNonAttackingQueens(item) == maxPairOfNonAttackingQueens:
+                if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
                     print("Solution {} is: ".format(i))
                     final_position = item
-                    print_arrangement(item)
+                    print_arrangement(item,maxPairOfNonAttackingQueens)
                     i+=1
             
+if __name__ == '__main__':
+    main()
