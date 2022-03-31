@@ -101,28 +101,31 @@ def print_arrangement(pos,maxPairOfNonAttackingQueens): #For every position in e
 
 #if __name__ == "__main__":
 def main():
-    num_queen = int(input("Enter the Number of Queens to be placed on the board: ")) 
-    setOfAllSolutions = []
-    for i in range(100):
-        setOfAllSolutions.append(random_space(num_queen))
+    num_queen = int(input("Enter the Number of Queens to be placed on the board: "))
+    if num_queen <= 3:
+        print("Solution does not exist")
+    else: 
+        setOfAllSolutions = []
+        for i in range(100):
+            setOfAllSolutions.append(random_space(num_queen))
 
-    maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2     
-    while [pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
-        setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
+        maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2     
+        while [pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
+            setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
+            
+
         
 
-    
-
-    for pos in setOfAllSolutions:
-        if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
-            print("")
-            new_list =[list(p) for p in permutations(pos)]
-            i=1
-            for item in new_list:
-                if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
-                    print("Solution {} is: ".format(i))
-                    print_arrangement(item,maxPairOfNonAttackingQueens)
-                    i+=1
-            
+        for pos in setOfAllSolutions:
+            if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+                print("")
+                new_list =[list(p) for p in permutations(pos)]
+                i=1
+                for item in new_list:
+                    if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+                        print("Solution {} is: ".format(i))
+                        print_arrangement(item,maxPairOfNonAttackingQueens)
+                        i+=1
+                
 if __name__ == '__main__':
     main()
