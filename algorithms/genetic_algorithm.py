@@ -111,7 +111,7 @@ def main():
         setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
         
 
-    final_position = []
+    
 
     for pos in setOfAllSolutions:
         if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
@@ -121,7 +121,6 @@ def main():
             for item in new_list:
                 if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
                     print("Solution {} is: ".format(i))
-                    final_position = item
                     print_arrangement(item,maxPairOfNonAttackingQueens)
                     i+=1
             
