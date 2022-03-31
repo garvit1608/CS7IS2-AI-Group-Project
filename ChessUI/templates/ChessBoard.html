@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<meta charset="UTF-8"> 
+<title>Chessboard using Pure CSS and HTML</title>
+
+<script src="{{ url_for('static', filename='chessboardscript.js') }}"></script>
+<style type="text/css">
+    
+
+
+.black {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #999;
+      font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+.white {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    font-size:50px;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+
+</style>
+
+</head>
+
+<body>
+
+    <form action="/algos" method="POST">
+    <label for="algos">Choose an algorithm:</label>     
+        <select name="algos" id="algos">
+        <option value="1">Backtracking</option>
+        <option value="2">Hill Climbing</option>
+        <option value="3">Genetic Algorithm</option>
+        </select>
+        
+        <label for="board_size">Enter the Number of Queens:</label>
+        <input type="number" id = "board_size" name ="board_size"/>
+        <p><input type="submit" value="Generate Solution" /></p>
+    </form>
+
+<div id = "board">
+{%- for line in range(1,size*size) %}
+{% if line%2 !=0 %}
+    {% if line in new_positions %}
+        <div class="white">&#9819;</div>
+    {% else %}
+        <div class="white"></div>
+    {% endif %}
+{% else %}
+    {% if line in new_positions %}
+        <div class="black">&#9819;</div>
+    {% else %}
+        <div class="black"></div>
+    {% endif %}
+{% endif %}
+
+
+{% endfor %}
+
+<input type="hidden" id="size" value="{{size}}">
+</div>
+</body>
+</html>
