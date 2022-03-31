@@ -101,11 +101,11 @@ def print_arrangement(pos): #For every position in each fitness (Pair of non-att
 
 if __name__ == "__main__":
     num_queen = int(input("Enter the Number of Queens to be placed on the board: ")) 
-    maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2  
     setOfAllSolutions = []
     for i in range(100):
         setOfAllSolutions.append(random_space(num_queen))
-         
+
+    maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2     
     while [pairOfNonAttackingQueens(pos) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
         setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens)
         
