@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def home_page():
     positions = [100,100,100,100,100]
-    return render_template("ChessBoard.html", size = 7,new_positions = positions)
+    return render_template("ChessBoard.html", size = 8,new_positions = positions, algo_temp =1)
 
 @app.route('/algos', methods=['POST'])
 def result_page():

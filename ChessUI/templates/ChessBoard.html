@@ -11,8 +11,8 @@
 
 .black {
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     background-color: #999;
       font-size:50px;
     text-align:center;
@@ -21,8 +21,8 @@
 }
 .white {
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     background-color: #fff;
     font-size:50px;
     text-align:center;
@@ -45,30 +45,49 @@
         </select>
         
         <label for="board_size">Enter the Number of Queens:</label>
-        <input type="number" value="7" id = "board_size" name ="board_size"/>
+        <input type="number" value="8" id = "board_size" name ="board_size"/>
         <p><input type="submit" value="Generate Solution" /></p>
     </form>
 
-<div id = "board">
-{%- for line in range(1,size*size) %}
-{% if line%2 !=0 %}
-    {% if line in new_positions %}
-        <div class="white">&#9819;</div>
-    {% else %}
-        <div class="white"></div>
-    {% endif %}
+<div id = "board" >
+{% if size%2 != 0 %}
+    {%- for line in range(1,size*size) %}
+        {% if line%2 !=0 %}
+            {% if line in new_positions %}
+                <div class="white">&#9819;</div>
+            {% else %}
+                <div class="white"></div>
+            {% endif %}
+        {% else %}
+            {% if line in new_positions %}
+                <div class="black">&#9819;</div>
+            {% else %}
+                <div class="black"></div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 {% else %}
-    {% if line in new_positions %}
-        <div class="black">&#9819;</div>
-    {% else %}
-        <div class="black"></div>
-    {% endif %}
+    {%- for line in range(1,size*size) %}
+        {% if ((line%2)+ ((line-1)//size))%2 !=0 %}
+            {% if line in new_positions %}
+                <div class="white">&#9819;</div>
+            {% else %}
+                <div class="white"></div>
+            {% endif %}
+        {% else %}
+            {% if line in new_positions %}
+                <div class="black">&#9819;</div>
+            {% else %}
+                <div class="black"></div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endif %}
 
 
-{% endfor %}
 
 <input type="hidden" id="size" value="{{size}}">
+<input type="hidden" id="algo_temp" value="{{algo_temp}}">
 </div>
 </body>
 </html>

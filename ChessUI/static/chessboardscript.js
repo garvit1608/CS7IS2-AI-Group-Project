@@ -3,11 +3,13 @@ window.addEventListener('load', function ()
 { 
     boardElement = document.getElementById('board');
     size = document.getElementById('size').value;
-    boardElement.style.width = size*80;
-    boardElement.style.height = size*80;
+    boardElement.style.width = size*64;
+    boardElement.style.height = size*64;
     boardElement.style.margin = 20 ;
     boardElement.style.border = "25px solid #333" ;
     algo = document.getElementById('algo_temp').value;
+    boardElement.style.marginLeft  = "54%" ;
+    boardElement.style.marginTop  = "-4%" ;
     
     if (algo == 1){
         document.getElementById("algos").selectedIndex = 0;
@@ -36,26 +38,51 @@ function next_click()
         lines = range(1,size*size)
         container.innerHTML ='';
         solution.innerHTML ='Solution '+ k;
-        for (let i = 0; i < lines.length ; i++) {
-            if (lines[i]%2 != 0) {
-                if (pos.includes(lines[i])){
-                    container.innerHTML += '<div class="white">&#9819;</div>';                
+        if (size%2 != 0){
+            for (let i = 0; i < lines.length ; i++) {
+                if (lines[i]%2 != 0) {
+                    if (pos.includes(lines[i])){
+                        container.innerHTML += '<div class="white">&#9819;</div>';                
+                    }
+                    else{
+                        container.innerHTML += '<div class="white"></div>';
+                    }
+                    
                 }
-                else{
-                    container.innerHTML += '<div class="white"></div>';
+                else {
+                    if (pos.includes(lines[i])){
+                        container.innerHTML += '<div class="black">&#9819;</div>';
+                    }
+                    else{
+                        container.innerHTML += '<div class="black"></div>';
+                    }
+                    
                 }
-                
-            }
-            else {
-                if (pos.includes(lines[i])){
-                    container.innerHTML += '<div class="black">&#9819;</div>';
-                }
-                else{
-                    container.innerHTML += '<div class="black"></div>';
-                }
-                
             }
         }
+        else {
+            for (let i = 0; i < lines.length ; i++) {
+                if (((lines[i]%2) + Math.floor((lines[i]-1)/size))%2 != 0) {
+                    if (pos.includes(lines[i])){
+                        container.innerHTML += '<div class="white">&#9819;</div>';                
+                    }
+                    else{
+                        container.innerHTML += '<div class="white"></div>';
+                    }
+                    
+                }
+                else {
+                    if (pos.includes(lines[i])){
+                        container.innerHTML += '<div class="black">&#9819;</div>';
+                    }
+                    else{
+                        container.innerHTML += '<div class="black"></div>';
+                    }
+                    
+                }
+            }
+        }
+        
     }
     else{
         solution.innerHTML ='No more solutions to display';
