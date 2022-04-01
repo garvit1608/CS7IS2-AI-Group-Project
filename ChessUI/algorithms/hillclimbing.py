@@ -39,7 +39,7 @@ class HillClimbing:
         return start_board
     
     # Function to print current board configuration
-    def print_board(self, state):
+    def print_board(self, state,positions):
         temp_board = []
         for i in range(self.n):
             t = []
@@ -54,6 +54,13 @@ class HillClimbing:
         for i in range(len(state)):
             print(str(temp_board[i]).replace(',', ' ').replace('\'', ''))
         print()
+        position =[]
+        for row in temp_board:
+            for i,item in enumerate(row):
+                if item =="Q":
+                    position.append(i+1)
+        print()
+        positions.append(position)
 
     # Function to count no of pairs conflicting on a board
     def find_heuristic(self, state):
@@ -113,7 +120,7 @@ class HillClimbing:
 
 def main(n):
     #n = int(input("Enter number of queens\t"))
-
+    positions =[]
     if n > 3:
         q = HillClimbing(n)
         present_board = q.generate_board()
@@ -121,12 +128,12 @@ def main(n):
         while not present_heuristic == 0:
             present_board = q.next_board(present_board)
             present_heuristic = q.heuristic
-        q.print_board(present_board)
+        q.print_board(present_board,positions)
         print("Steps climbed", q.steps_climbed)
         print("Random restarts", q.random_restarts)
         print("Steps climbed after last restart", q.steps_climbed_after_last_restart)
     else:
         print("Solution does not exist")
-
+    return positions
 if __name__ == '__main__':
     main()

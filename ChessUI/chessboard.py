@@ -23,10 +23,14 @@ def result_page():
     else:
         positions = genetic_algorithm.main(board_size)
     new_pos =[]
-    n= len(positions)
-    for i,item in enumerate(positions):
-        new_pos.append(item+i*n)
-    return render_template("ChessBoard.html", size = board_size ,new_positions = new_pos)
+    #position = positions[1]
+    n= len(positions[0])
+    for i,pos in enumerate(positions):
+        temp_pos = []
+        for j,item in enumerate(pos):
+            temp_pos.append(item+j*n)
+        new_pos.append(temp_pos)
+    return render_template("ChessBoardLoaded.html", size = board_size ,new_positions = new_pos, algo_temp =algo)
 
 if __name__ == "__main__":
     app.run()
