@@ -4,10 +4,20 @@
 <meta charset="UTF-8"> 
 <title>Chessboard using Pure CSS and HTML</title>
 
-<script src="{{ url_for('static', filename='chessboardscript.js') }}"></script>
+<script src="{{ url_for('static', filename='chessboardscriptnext.js') }}"></script>
 <style type="text/css">
     
+.algostyle {
+    margin-top: 10%;
+    margin-left: 15%;
+}
+.nextbuttonstyle{
+    height:30px;
+    width:130px;
+    font-size: 14px;
+    margin-left: 15%;
 
+}
 
 .black {
     float: left;
@@ -36,21 +46,30 @@
 
 <body>
 
-    <form action="/algos" method="POST">
-    <label for="algos">Choose an algorithm:</label>     
+    <form class = "algostyle" action="/algos" method="POST">
+    <label for="algos" style="font-size: 20px">Choose an algorithm</label>  
+    <br></br>      
         <select name="algos" id="algos">
         <option value="1">Backtracking</option>
         <option value="2">Hill Climbing</option>
         <option value="3">Genetic Algorithm</option>
         </select>
+        <br></br>
+        <br></br>
         
-        <label for="board_size">Enter the Number of Queens:</label>
+        <label for="board_size" style="font-size: 20px">Enter the Number of Queens</label>
+        <br></br>
         <input type="number" value={{size}} id = "board_size" name ="board_size"/>
-        <p><input type="submit" value="Generate Solution" /></p>
+        <br></br>
+        <br></br>
+        <p><input type="submit" value="Generate Solution" style="height:30px; width:130px; font-size: 14px"/></p>
     </form>
-
-    <button  id="Next Solution" value = "{{new_positions}}" onclick="next_click()" >Next Solution</button>
-    <div id = "solution">Solution 1</div>
+    <br></br>
+  
+    <button class="nextbuttonstyle" id="Next Solution" value = "{{new_positions}}" onclick="next_click()" >Next Solution</button>
+    <br></br>
+    <div id = "solution" style="font-size: 20px; margin-left: 16.75%" >Solution 1</div>
+    
 <div id = "board"  >
     
 {% if size%2 != 0 %}

@@ -9,7 +9,7 @@ window.addEventListener('load', function ()
     boardElement.style.border = "25px solid #333" ;
     algo = document.getElementById('algo_temp').value;
     boardElement.style.marginLeft  = "54%" ;
-    boardElement.style.marginTop  = "-30%" ;
+    boardElement.style.marginTop  = "-38%" ;
     
     if (algo == 1){
         document.getElementById("algos").selectedIndex = 0;

@@ -7,7 +7,10 @@
 <script src="{{ url_for('static', filename='chessboardscript.js') }}"></script>
 <style type="text/css">
     
-
+.algostyle {
+    margin-top: 10%;
+    margin-left: 15%;
+}
 
 .black {
     float: left;
@@ -36,17 +39,24 @@
 
 <body>
 
-    <form action="/algos" method="POST">
-    <label for="algos">Choose an algorithm:</label>     
-        <select name="algos" id="algos">
-        <option value="1">Backtracking</option>
+    <form class = "algostyle" action="/algos" method="POST">
+    <label for="algos" style="font-size: 20px">Choose an algorithm</label>
+    <br></br>     
+        <select name="algos" id="algos" >
+        <option value="1"  >Backtracking</option>
         <option value="2">Hill Climbing</option>
         <option value="3">Genetic Algorithm</option>
         </select>
+        <br></br>
+        <br></br>
         
-        <label for="board_size">Enter the Number of Queens:</label>
-        <input type="number" value="8" id = "board_size" name ="board_size"/>
-        <p><input type="submit" value="Generate Solution" /></p>
+        <label for="board_size" style="font-size: 20px">Enter the Number of Queens</label>
+        <br></br>
+        <input type="number" value="8" id = "board_size" name ="board_size" />
+        <br></br>
+        <br></br>
+        
+        <p><input type="submit" value="Generate Solution" style="height:30px; width:130px; font-size: 14px"/></p>
     </form>
 
 <div id = "board" >
