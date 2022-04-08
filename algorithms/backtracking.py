@@ -1,3 +1,5 @@
+import time
+import datetime
 # Function to create N x N board
 def create_board(number_of_queens):
     board = []
@@ -62,12 +64,16 @@ def n_queen(board, row):
 
 def main():
     number_of_queens = int(input('Enter number of queens, N \n'))
-
+    start_time=datetime.datetime.now()
     if number_of_queens <= 3:
         print("Solution does not exist")
     else:
         board = create_board(number_of_queens)
         n_queen(board, 0)
+    end_time=datetime.datetime.now()
+    Time_diff=end_time-start_time
+    Time_diff=Time_diff.total_seconds()*1000
+    return Time_diff
 
 if __name__ == '__main__':
     main()
