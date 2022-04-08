@@ -71,33 +71,31 @@ class HillClimbing:
     # Function to get the next board with lower heuristic
     def next_board(self, present_board):
         next_board = [NQueen() for i in range(self.n)]
-        tmp_board = [NQueen() for i in range(self.n)]
+        temp_board = [NQueen() for i in range(self.n)]
         present_heuristic = best_heuristic = self.find_heuristic(present_board)
         temp_heuristic = None
 
         for i in range(self.n):
             # Copy present board as best board and temp board
-            next_board[i] = tmp_board[i] = NQueen(present_board[i].get_row(), present_board[i].get_column())
+            next_board[i] = temp_board[i] = NQueen(present_board[i].get_row(), present_board[i].get_column())
 
-        # Iterate each column
         for i in range(self.n):
             if i>0:
-                tmp_board[i-1] = NQueen(present_board[i-1].get_row(), present_board[i-1].get_column())
-            tmp_board[i] = NQueen(0, tmp_board[i].get_column())
-            # Iterate each row
+                temp_board[i-1] = NQueen(present_board[i-1].get_row(), present_board[i-1].get_column())
+            temp_board[i] = NQueen(0, temp_board[i].get_column())
             for j in range(self.n):
                 # Get the heuristic
-                temp_heuristic = self.find_heuristic(tmp_board)
+                temp_heuristic = self.find_heuristic(temp_board)
                 # Check if temp board is better than best board
                 if (temp_heuristic < best_heuristic):
                     best_heuristic = temp_heuristic
                     # Copy the temp board as best board
                     for k in range(self.n):
-                        next_board[k] = NQueen(tmp_board[k].get_row(), tmp_board[k].get_column())
+                        next_board[k] = NQueen(temp_board[k].get_row(), temp_board[k].get_column())
                     
                 # Move the queen
-                if (not tmp_board[i].get_row() == self.n - 1):
-                    tmp_board[i].move()
+                if (not temp_board[i].get_row() == self.n - 1):
+                    temp_board[i].move()
 
         # Check whether the present board and the best board found have same heuristic
         # If yes, then randomly generate new board and assign it to the best board
