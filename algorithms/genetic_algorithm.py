@@ -1,4 +1,6 @@
 import random
+import time
+import datetime
 from itertools import permutations
 #Based on Darwin's Survival of The Fittest 
 #Here Fitness is taken as the Pair of Non Attacking Queens arrangement
@@ -102,6 +104,7 @@ def print_arrangement(pos,maxPairOfNonAttackingQueens): #For every position in e
 #if __name__ == "__main__":
 def main():
     num_queen = int(input("Enter the Number of Queens to be placed on the board: "))
+    start_time=datetime.datetime.now()
     if num_queen <= 3:
         print("Solution does not exist")
     else: 
@@ -126,6 +129,10 @@ def main():
                         print("Solution {} is: ".format(i))
                         print_arrangement(item,maxPairOfNonAttackingQueens)
                         i+=1
+    end_time=datetime.datetime.now()
+    Time_diff=end_time-start_time
+    Time_diff=Time_diff.total_seconds()*1000
+    return Time_diff
                 
 if __name__ == '__main__':
     main()

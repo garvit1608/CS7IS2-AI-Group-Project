@@ -1,4 +1,6 @@
 import random
+import time
+import datetime
 
 # Class to hold chess board configuration
 class NQueen:
@@ -113,6 +115,7 @@ class HillClimbing:
 
 def main():
     n = int(input("Enter number of queens\t"))
+    start_time=datetime.datetime.now()
 
     if n > 3:
         q = HillClimbing(n)
@@ -127,6 +130,10 @@ def main():
         print("Steps climbed after last restart", q.steps_climbed_after_last_restart)
     else:
         print("Solution does not exist")
+    end_time=datetime.datetime.now()
+    Time_diff=end_time-start_time
+    Time_diff=Time_diff.total_seconds()*1000
+    return Time_diff
 
 if __name__ == '__main__':
     main()
