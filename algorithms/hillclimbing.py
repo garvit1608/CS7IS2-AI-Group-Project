@@ -111,8 +111,11 @@ class HillClimbing:
         return next_board
 
 
-def main():
-    n = int(input("Enter number of queens\t"))
+def main(N=None):
+    if N:
+        n = N
+    else:
+        n = int(input("Enter number of queens\t"))
     start_time=datetime.datetime.now()
 
     if n > 3:
