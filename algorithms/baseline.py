@@ -1,5 +1,6 @@
 import time
 import datetime
+from copy import deepcopy
 
 
 # The naive approach is used as baseline. 
@@ -23,71 +24,98 @@ def print_board(board):
 def is_safe_move(board, row, col):
 
     # return false if two queens share the same column
-    for i in range(row):
-        if board[i][col] == 'Q':
+    for i in range(len(board)):
+        if board[i][col] == 'Q' and i != row:
             return False
 
-    # return false if two queens share the same primary diagonal
+    # return false if two queens share the same row
+    for i in range(len(board)):
+        if board[row][i] == 'Q' and i != col:
+            return False
+
+    # return false if two queens share the same enitre primary diagonal
     r = row
     c = col
     while r >= 0 and c < len(board):
-        if board[r][c] == 'Q':
+        if board[r][c] == 'Q' and row != r and col != c:
             return False
         r -= 1
         c += 1
 
-    # return false if two queens share the same secondary diagonal
+    r = row
+    c = col
+    while r < len(board) and c >= 0:
+        if board[r][c] == 'Q' and row != r and col != c:
+            return False
+        r += 1
+        c -= 1
+
+    # return false if two queens share the same entire secondary diagonal
     r = row
     c = col
     while r >= 0 and c >= 0:
-        if board[r][c] == 'Q':
+        if board[r][c] == 'Q' and row != r and col != c:
             return False
         r -= 1
         c -= 1
 
+    r = row
+    c = col
+    while r < len(board) and c < len(board):
+        if board[r][c] == 'Q' and row != r and col != c:
+            return False
+        r += 1
+        c += 1
+
     return True
 
-def n_queen(results, board, row):
+def no_conflict(board):
+    for row in range(len(board)):
+        for col in range(len(board)):
+            if board[row][col] == 'Q':
+                if not is_safe_move(board, row, col):
+                    return False
+    return True
+
+def n_queen(board, row):
 
     # if 'N' queens are placed successfully i.e all rows are explored, print the board
     if row == len(board):
-        # print_board(board)
-        results.append(board)
+        # b = deepcopy(board)
+        # configurations.append(b)
+        if no_conflict(board):
+            print_board(board)
         return
 
     # place queen at every column in the current row 'row' and recursively call for each valid movement
     for col in range(len(board)):
+        # place queen on the current square in board
+        board[row][col] = 'Q'
 
-        # if no two queens threaten each other
-        if is_safe_move(board, row, col):
-            # place queen on the current square in board
-            board[row][col] = 'Q'
+        # recursively call for the next row
+        n_queen(board, row + 1)
 
-            # recursively call for the next row
-            n_queen(results, board, row + 1)
+        # reset the current square
+        board[row][col] = '_'
 
-            # reset the current square
-            board[row][col] = '_'
+# def print_solutions(configurations):
+#     for board in configurations:
+#         if no_conflict(board):
+#             print_board(board)
 
-    print_solutions()
-
-def print_solutions(results):
-    for result in results:
-        print_board(result)
-
-def main(N):
+def main(N=None):
     if N:
         number_of_queens = N
     else:
         number_of_queens = int(input('Enter number of queens, N \n'))
     start_time=datetime.datetime.now()
-    results = []
+    # configurations = []
     if number_of_queens <= 3:
         print("Solution does not exist")
     else:
         board = create_board(number_of_queens)
-        n_queen(results, board, 0)
-        print_solutions(results)
+        n_queen(board, 0)
+        # print_solutions(configurations)
     end_time=datetime.datetime.now()
     Time_diff=end_time-start_time
     Time_diff=Time_diff.total_seconds()*1000
