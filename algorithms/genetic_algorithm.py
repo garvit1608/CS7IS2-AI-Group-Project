@@ -122,13 +122,13 @@ def main():
         for pos in setOfAllSolutions:
             if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
                 print("")
-                new_list =[list(p) for p in permutations(pos)]
-                i=1
-                for item in new_list:
-                    if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
-                        print("Solution {} is: ".format(i))
-                        print_arrangement(item,maxPairOfNonAttackingQueens)
-                        i+=1
+                #new_list =[list(p) for p in permutations(pos)]
+                #i=1
+                #for item in new_list:
+                    #if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+                print("Solution  is: ")
+                print_arrangement(pos,maxPairOfNonAttackingQueens)
+                        #i+=1
     end_time=datetime.datetime.now()
     Time_diff=end_time-start_time
     Time_diff=Time_diff.total_seconds()*1000

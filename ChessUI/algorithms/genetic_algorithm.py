@@ -61,6 +61,7 @@ def crossover(x, y): #Re-arrange the position in the matrix
 
 def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens,alter_probability= 0.03): #Populate or generate the list of solutions
     new_SetOfSolutions = []
+    return_solution =[]
     probability_vals = []
     for solution in setOfAllSolutions:
         probability_vals.append(pairOfNonAttackingQueens(solution,maxPairOfNonAttackingQueens) / maxPairOfNonAttackingQueens)
@@ -75,9 +76,10 @@ def generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNo
         print_arrangement(child,maxPairOfNonAttackingQueens)
         new_SetOfSolutions.append(child)
         if pairOfNonAttackingQueens(child,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+            return_solution.append(child)
             break
         i=i+1
-    return new_SetOfSolutions
+    return new_SetOfSolutions ,return_solution
 
 def print_arrangement(pos,maxPairOfNonAttackingQueens): #For every position in each fitness (Pair of non-attacking queens), show
     print("Position = {},  Fitness Score = {}"
@@ -109,24 +111,27 @@ def main(num_queen):
         for i in range(100):
             setOfAllSolutions.append(random_space(num_queen))
 
-        maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2     
+        maxPairOfNonAttackingQueens = (num_queen*(num_queen-1))/2 
         while [pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) for pos in setOfAllSolutions].count(maxPairOfNonAttackingQueens) <1:
-            setOfAllSolutions = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
+            setOfAllSolutions, return_solution = generate_solutionSet(setOfAllSolutions, pairOfNonAttackingQueens,maxPairOfNonAttackingQueens)
             
 
         
-        return_solution = []
-        for pos in setOfAllSolutions:
-            if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
-                print("")
-                new_list =[list(p) for p in permutations(pos)]
-                i=1
-                for item in new_list:
-                    if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
-                        return_solution.append(item)
-                        print("Solution {} is: ".format(i))
-                        print_arrangement(item,maxPairOfNonAttackingQueens)
-                        i+=1
+        for item in return_solution:
+            print("")
+            print("Solution  is: ")
+            print_arrangement(item,maxPairOfNonAttackingQueens)
+        #for pos in setOfAllSolutions:
+            #if pairOfNonAttackingQueens(pos,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+                #print("")
+                #new_list =[list(p) for p in permutations(pos)]
+                #i=1
+                #for item in new_list:
+                    #if pairOfNonAttackingQueens(item,maxPairOfNonAttackingQueens) == maxPairOfNonAttackingQueens:
+                #return_solution.append(pos)
+                #print("Solution  is: ")
+                #print_arrangement(pos,maxPairOfNonAttackingQueens)
+                        #i+=1
     return return_solution
 if __name__ == '__main__':
     main()
