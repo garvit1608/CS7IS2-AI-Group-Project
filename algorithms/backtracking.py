@@ -62,8 +62,11 @@ def n_queen(board, row):
             # reset the current square
             board[row][col] = '_'
 
-def main():
-    number_of_queens = int(input('Enter number of queens, N \n'))
+def main(N=None):
+    if N:
+        number_of_queens = N
+    else:
+        number_of_queens = int(input('Enter number of queens, N \n'))
     start_time=datetime.datetime.now()
     if number_of_queens <= 3:
         print("Solution does not exist")

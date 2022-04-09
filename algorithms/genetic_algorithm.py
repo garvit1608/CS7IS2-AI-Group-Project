@@ -102,8 +102,11 @@ def print_arrangement(pos,maxPairOfNonAttackingQueens): #For every position in e
     
 
 #if __name__ == "__main__":
-def main():
-    num_queen = int(input("Enter the Number of Queens to be placed on the board: "))
+def main(N=None):
+    if N:
+        num_queen = N
+    else:
+        num_queen = int(input("Enter the Number of Queens to be placed on the board: "))
     start_time=datetime.datetime.now()
     if num_queen <= 3:
         print("Solution does not exist")
